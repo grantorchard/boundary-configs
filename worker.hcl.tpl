@@ -1,24 +1,22 @@
-disable_mlock = true
+listener "tcp" {
+    purpose = "proxy"
+    tls_disable = true
+    address = "0.0.0.0:9202"
+}
 
-controller {
-  name = "boundary-controller-{{ env "NOMAD_ALLOC_INDEX" }}"
-  description = "Boundary Controller on {{ env "attr.unique.hostname" }}"
-	database {
-      url = "env://BOUNDARY_POSTGRES_URL"
+worker {
+  name = "worker-{{ env "NOMAD_ALLOC_INDEX" }}"
+  description = "A default worker created demonstration"
+  controllers = [
+    env://BOUNDARY_PUBLIC_CLUSTER_ADDR:9201
+  ]
+
+  public_addr = env://BOUNDARY_PUBLIC_WORKER_ADDR
+
+  tags {
+    type   = ["dev"]
+    region = ["humblelab"]
   }
-	public_cluster_addr = "env://BOUNDARY_PUBLIC_CLUSTER_ADDR"
-}
-
-listener "tcp" {
-  address     = "0.0.0.0:9200"
-  purpose     = "api"
-  tls_disable = true
-}
-
-listener "tcp" {
-  address = "0.0.0.0:9201"
-  purpose = "cluster"
-  tls_disable = true
 }
 
 kms "transit" {
