@@ -1,41 +1,28 @@
 controller {
-  name = "example-controller"
-  description = "An example controller"
+  name = "boundary-controller"
+  description = "Boundary Controller on {{ env "attr.unique.hostname" }}"
 	database {
       url = "env://BOUNDARY_POSTGRES_URL"
   }
+	public_cluster_addr = "boundary_worker_access.service.consul"
 }
 
 listener "tcp" {
-  # Should be the address of the NIC that the controller server will be reached on
-  address = "0.0.0.0"
-  # The purpose of this listener block
-  purpose = "api"
-
+  address     = "0.0.0.0:9200"
+  purpose     = "api"
   tls_disable = true
-
-  # Uncomment to enable CORS for the Admin UI. Be sure to set the allowed origin(s)
-  # to appropriate values.
-  #cors_enabled = true
-  #cors_allowed_origins = ["yourcorp.yourdomain.com"]
 }
 
-# Data-plane listener configuration block (used for worker coordination)
 listener "tcp" {
-  # Should be the IP of the NIC that the worker will connect on
-  address = "0.0.0.0"
-  # The purpose of this listener
+  address = "0.0.0.0:9201"
   purpose = "cluster"
-
   tls_disable = true
 }
 
 kms "transit" {
   purpose            = "root"
-  address            = "https://vault-cluster.vault.11eb56d6-0f95-3a99-a33c-0242ac110007.aws.hashicorp.cloud:8200"
   disable_renewal    = "false"
 
-  // Key configuration
   key_name           = "boundary_root"
   mount_path         = "transit/"
   namespace          = "admin/"
@@ -43,10 +30,8 @@ kms "transit" {
 
 kms "transit" {
   purpose            = "worker-auth"
-  address            = "https://vault-cluster.vault.11eb56d6-0f95-3a99-a33c-0242ac110007.aws.hashicorp.cloud:8200"
   disable_renewal    = "false"
 
-  // Key configuration
   key_name           = "boundary_worker_auth"
   mount_path         = "transit/"
   namespace          = "admin/"
@@ -54,10 +39,8 @@ kms "transit" {
 
 kms "transit" {
   purpose            = "recovery"
-  address            = "https://vault-cluster.vault.11eb56d6-0f95-3a99-a33c-0242ac110007.aws.hashicorp.cloud:8200"
   disable_renewal    = "false"
 
-  // Key configuration
   key_name           = "boundary_recovery"
   mount_path         = "transit/"
   namespace          = "admin/"
