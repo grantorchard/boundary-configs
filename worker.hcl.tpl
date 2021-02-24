@@ -8,10 +8,10 @@ worker {
   name = "worker-{{ env "NOMAD_ALLOC_INDEX" }}"
   description = "A default worker created demonstration"
   controllers = [
-    env://BOUNDARY_PUBLIC_CLUSTER_ADDR:9201
+    "env://BOUNDARY_PUBLIC_CLUSTER_ADDR"
   ]
 
-  public_addr = env://BOUNDARY_PUBLIC_WORKER_ADDR
+  public_addr = "env://BOUNDARY_PUBLIC_WORKER_ADDR"
 
   tags {
     type   = ["dev"]
