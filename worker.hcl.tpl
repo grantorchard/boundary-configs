@@ -1,3 +1,5 @@
+disable_mlock = true
+
 listener "tcp" {
     purpose = "proxy"
     tls_disable = true
