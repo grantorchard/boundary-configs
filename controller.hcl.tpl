@@ -8,7 +8,7 @@ controller {
 
 listener "tcp" {
   # Should be the address of the NIC that the controller server will be reached on
-  address = "${attr.unique.network.ip-address}"
+  address = "0.0.0.0"
   # The purpose of this listener block
   purpose = "api"
 
@@ -23,7 +23,7 @@ listener "tcp" {
 # Data-plane listener configuration block (used for worker coordination)
 listener "tcp" {
   # Should be the IP of the NIC that the worker will connect on
-  address = "${attr.unique.network.ip-address}"
+  address = "0.0.0.0"
   # The purpose of this listener
   purpose = "cluster"
 
