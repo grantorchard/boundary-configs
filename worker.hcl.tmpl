@@ -8,7 +8,7 @@ worker {
   name = "worker-{{ env "NOMAD_ALLOC_INDEX" }}"
   description = "A default worker created demonstration"
   controllers = [
-    "env://BOUNDARY_PUBLIC_CLUSTER_ADDR"
+    "10.0.0.45"
   ]
 
   public_addr = "env://BOUNDARY_PUBLIC_WORKER_ADDR"
