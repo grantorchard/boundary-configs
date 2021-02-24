@@ -1,10 +1,12 @@
+disable_mlock = true
+
 controller {
   name = "boundary-controller"
   description = "Boundary Controller on {{ env "attr.unique.hostname" }}"
 	database {
       url = "env://BOUNDARY_POSTGRES_URL"
   }
-	public_cluster_addr = "boundary_worker_access.service.consul"
+	public_cluster_addr = "env://BOUNDARY_PUBLIC_CLUSTER_ADDR"
 }
 
 listener "tcp" {
