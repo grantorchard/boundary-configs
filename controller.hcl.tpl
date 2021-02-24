@@ -1,6 +1,9 @@
 controller {
   name = "example-controller"
   description = "An example controller"
+	database {
+      url = "env://BOUNDARY_POSTGRES_URL"
+  }
 }
 
 listener "tcp" {
