@@ -12,6 +12,7 @@ controller {
 listener "tcp" {
   address     = "0.0.0.0:9200"
   purpose     = "api"
+	tls_disable = true
 }
 
 listener "tcp" {
