@@ -2,8 +2,9 @@ disable_mlock = true
 
 listener "tcp" {
     purpose = "proxy"
-    tls_disable = true
     address = "0.0.0.0:9202"
+		tls_cert_file = "${NOMAD_SECRETS_DIR}/certificate.crt"
+		tls_key_file = "${NOMAD_SECRETS_DIR}/private_key.key"
 }
 
 worker {
