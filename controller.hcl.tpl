@@ -19,8 +19,6 @@ listener "tcp" {
 listener "tcp" {
   address = "0.0.0.0:9201"
   purpose = "cluster"
-  tls_cert_file = "${NOMAD_SECRETS_DIR}/certificate.crt"
-	tls_key_file = "${NOMAD_SECRETS_DIR}/private_key.key"
 }
 
 kms "transit" {
